@@ -1,0 +1,116 @@
+<html>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <head>
+        <script>
+            function binhchon() {
+                danhsachchon.innerHTML = document.forms[0].hoten.value; //Hiển thị giá trị họ tên
+                for (i = 0; i < document.forms[0].phai.length; i++) {
+                    if (document.forms[0].phai[i].checked){ //Kiểm tra nếu radio được chọn
+                        danhsachchon.innerHTML += " (" + document.forms[0].phai.value + ")"; //Hiện giá trị phái
+                        break;
+                    }
+                }
+
+                danhsachchon.innerHTML += "<br>- TP yêu thích: "; //Hiện đoạn TP yêu thích
+                for (i = 0; i < document.forms[0].cacdiadiem.length; i++){ //Duyệt qua các địa điểm
+                    if (document.forms[0].cacdiadiem[i].checked) //Nếu địa điểm được chọn
+                        danhsachchon.innerHTML += document.forms[0].cacdiadiem[i].value + " | "; //Hiện địa điểm đã được chọn ra
+                }
+
+                i = document.forms[1].thichnhat.selectedIndex; //Gán i là chỉ số của địa điểm được lựa chọn trong select
+                thichnhat = document.forms[1].thichnhat[i].value; //Lấy giá trị của chỉ số i vừa được gán
+
+                danhsachchon.innerHTML += "<br>- " + "TP thích nhất: " + thichnhat; //Hiện giá trị của chỉ số i trong select
+            }
+
+            function kiemtra(diadiemmoi){
+                var danhsachdiadiem = []; //Tạo mảng mới để lưu trữ các địa điểm
+                for (i = 0; i < document.forms[0].cacdiadiem.length; i++){ //Duyệt qua từng địa điểm trong form
+                    danhsachdiadiem.push(document.forms[0].cacdiadiem[i].value); //Lưu các địa điểm đã được duyệt trong form
+                }
+                if(danhsachdiadiem.includes(diadiemmoi)) //Hàm includes kiểm tra xem phần tử đó có tồn tại trong mảng hay không
+                    return true; //Trả về true nếu có
+                else
+                    return false; //Và false nếu không có
+            }
+
+            function them() {
+                var diadiemmoi = prompt("Nhập địa điểm mới", ""); //Lấy giá trị địa điểm mới
+                // danhsachdiadiem.push(diadiemmoi); //Thêm địa điểm mới vào mảng danhsachdiadiem
+                
+                    if (kiemtra(diadiemmoi)){ //Kiểm tra phần tử mới thêm vào đã có hay chưa, nếu chưa thì thực hiện các lệnh sau
+                        alert("Exist!");
+                    }else{
+                        var checkbox = document.createElement('input'); //Tạo phần tử input
+                        checkbox.type = 'checkbox'; //Loại phần tử input là checkbox
+                        checkbox.name = 'cacdiadiem'; //Tên phần tử là cacdiadiem
+                        checkbox.id = diadiemmoi; //ID phần tử là diadiemmoi
+                        checkbox.value = diadiemmoi; //Giá trị phần tử là diadiemmoi
+
+                        var label = document.createElement('label'); //Tạo phần nhãn cho checkbox
+                        label.htmlFor = 'cacdiadiem'; //Câu lệnh tạo nhãn
+                        label.appendChild(document.createTextNode(diadiemmoi)); //Tạo nhãn có giá trị diadiemmoi cho checkbox
+
+                        var br = document.createElement('br') //Tạo phần tử xuống dòng cho checkbox
+                        
+                        form0.appendChild(checkbox); //Hiên thị checkbox
+                        form0.appendChild(label); //Hiển thị nhãn
+                        form0.appendChild(br); //Hiển thị xuống dòng
+                        //Tạo option địa điểm mới trong thẻ select
+                        var select = document.createElement('option'); //Tạo phần tử option mới
+                        select.value = diadiemmoi; //Đặt giá trị (value) = địa điểm mới
+                        select.id = diadiemmoi; //Đặt id là diadiemmoi
+                        select.appendChild(document.createTextNode(diadiemmoi)); //Tạo phần text cho option là địa điểm mới
+                        thichnhat.appendChild(select); //Hiển thị giá địa điểm mới trong select
+                    }
+            }
+
+            function xoa(){
+                diadiemxoa = prompt("Nhập địa điểm cần xóa", ""); //Lấy giá trị cần xóa từ prompt
+                if(kiemtra(diadiemxoa)){ //Kiểm tra điểm cần xóa có tồn tại hay không, nếu có thì thực hiện các lệnh dưới
+                    var form0 = document.getElementById("form0");
+                    var form1 = document.getElementById("form1");
+                    var div = document.getElementById("chondiadiem");
+                    var checkbox = document.getElementById(diadiemxoa);
+                    var label = document.getElementsByClassName(diadiemxoa);
+                    var select = document.getElementById("thichnhat");
+                    var option = document.getElementById(diadiemxoa);
+
+                    form0.removeChild(div.removeChild(checkbox));
+                    
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1 align="center">BÌNH CHỌN THÀNH PHỐ YÊU THÍCH</h1>
+        <form action="#" name="form0" id="form0" method="post">
+            <br>Họ tên: <input name="hoten" type="text" value="">
+            <br>Phái: <input type="radio" name="phai" id="phai" value="Nam"> Nam</input>
+                     <input type="radio" name="phai" id="phai" value="Nữ"> Nữ</input>
+            <div class="chondiadiem" name="chondiadiem" id="chondiadiem">
+            <br>Chọn địa điểm:
+            <br><input type="checkbox" name="cacdiadiem" id="Hà Nội" value="Hà Nội"><label for="cacdiadiem" name="Hà Nội"> Hà Nội</label>
+            <br><input type="checkbox" name="cacdiadiem" id="Nha Trang" value="Nha Trang"><label for="cacdiadiem" name="Nha Trang"> Nha Trang</label>
+            <br><input type="checkbox" name="cacdiadiem" id="TP HCM" value="TP HCM"><label for="cacdiadiem" name="TP HCM"> TP HCM</label>
+            <br><input type="checkbox" name="cacdiadiem" id="Cần Thơ" value="Cần Thơ"><label for="cacdiadiem" name="Cần Thơ"> Cần Thơ</label>
+            </div>
+        </form>
+        <form action="#" name="form1" id="form1" method="post">
+            <br>Thành phố yêu thích nhất:
+            <select name="thichnhat" id="thichnhat">
+                <option value="Hà Nội" id="Hà Nội">Hà Nội</option>
+                <option value="Nha Trang" id="Nha Trang">Nha Trang</option>
+                <option value="TP HCM" id="TP HCM">TP. HCM</option>
+                <option value="Cần Thơ" id="Cần Thơ">Cần Thơ</option>
+            </select>
+            <p><input type="button" value="Bình chọn" name="button" onclick="binhchon();">
+               <input type="button" value="Thêm" name="button" onclick="them();">
+               <input type="button" value="Xóa" name="button" onclick="xoa()">
+            </p>
+        </form>
+        Kết quả:
+        <p id="danhsachchon">&nbsp;</p>
+        <p id="danhsachdiadiem">&nbsp;</p>
+    </body>
+</html>
