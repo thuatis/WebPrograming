@@ -1,0 +1,47 @@
+<html>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <head>
+
+    </head>
+    <body>
+        <h1>Đăng ký tài khoản hệ thống</h1>
+        <form action="#" method="POST">
+            Tên đăng nhập(*): <input type="text" name="username" id="username" value=""><br>
+            Password(*): <input type="password" name="password" id="password" value=""><br>
+            Nhập lại password(*): <input type="password" name="re_password" id="re_password" value=""><br>
+            Họ(*): <input type="text" name="firstname" id="firstname" value=""><br>
+            Tên(*): <input type="text" name="lastname" id="lastname" value=""><br>
+            Email(*): <input type="email" name="email" id="email" value=""><br>
+            Số điện thoại(*): <input type="number" name="phone" id="phone" value=""><br>
+            <input type="button" value="Đăng ký" name="button" onclick="validateAllForm()">
+        </form>
+        <script language="javascript">
+            function validateAllForm(){
+                var username = document.forms[0].username.value;
+                var password = document.forms[0].password.value;
+                var re_password = document.forms[0].re_password.value;
+                var firstname = document.forms[0].firstname.value;
+                var lastname = document.forms[0].lastname.value;
+                var email = document.forms[0].email.value;
+                var phone = document.forms[0].phone.value;
+                if(username == "")
+                    alert("Khong duoc de trong Ten dang nhap");
+                else
+                    if(/\s^\w/.test(username))
+                        alert("Ten dang nhap khong co khoang tron, bat dau bang mot ki tu.");
+                if(password =="")
+                    alert("Khong duoc de trong mat khau.");
+                else
+                    if(!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}/.test(password))
+                        alert("Mat khau phai co 8-16 ki tu. Phai chua ki tu, ki so, ki tu dac biet, co chu hoa chu thuong va khong chua ten nguoi dung.");
+                if(password != re_password)
+                    alert("Khong giong voi mat khau.");
+                if(!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email))
+                    alert("Nhap sai dinh dang email.");
+                if(!/\d{12,12}/.test(phone))
+                    alert("So dien thoai phai co 12 ki so.");
+            }
+        </script>
+
+    </body>
+</html>
